@@ -1,0 +1,10 @@
+<!-- templates/401.html -->
+{% extends "base.html" %} {% block content %}
+<h1>Unauthorized</h1>
+<p>
+  You don’t have permission to view this page. Please
+  <a href="{{ url_for('main.login') }}">log in</a>.
+</p>
+{% endblock %} {% block title %}Unauthorized{% endblock %} {% block description
+%}You do not have permission to access this page.{% endblock %} {% block
+keywords %}unauthorized, access denied, login required{% endblock %}

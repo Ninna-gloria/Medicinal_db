@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}Add Use{% endblock %} {% block
+content %}
+<h2 class="mb-3">Add Medicinal Use for {{ plant.name }}</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div class="form-group">
+    {{ form.use_description.label(class="form-label") }} {{
+    form.use_description(class="form-control") }}
+  </div>
+  <button type="submit" class="btn btn-success mt-2">Submit</button>
+</form>
+{% endblock %}

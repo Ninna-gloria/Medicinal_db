@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block title %}Server Error{% endblock %} {% block
+content %}
+<div class="text-center mt-5">
+  <h1>500 – Something went wrong</h1>
+  <p>
+    Don't worry, we'll look into it. You can
+    <a href="{{ url_for('main.index') }}">return to safety</a>.
+  </p>
+</div>
+{% endblock %}

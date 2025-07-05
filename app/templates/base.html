@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Traditional Medicinal Plant DB{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <style>
+      body {
+        background-color: #201a02;
+        color: #f9f2f2;
+        font-size: 1.15rem;
+        /* Four decorative sticker images in the background, positioned below the navbar and aligned to corners */
+        background-image: url("{{ url_for('static', filename='img/leaf1.png') }}"),
+          url("{{ url_for('static', filename='img/leaf2.png') }}"),
+          url("{{ url_for('static', filename='img/leaf3.png') }}"),
+          url("{{ url_for('static', filename='img/leaf4.png') }}");
+        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+        background-position: left 40px top 140px,
+          /* Top left, below navbar */ right 40px top 140px,
+          /* Top right, below navbar */ left 40px bottom 60px,
+          /* Bottom left */ right 40px bottom 60px; /* Bottom right */
+        background-size: 80px, 80px, 100px, 100px;
+      }
+      .navbar {
+        background-color: #0a4b0e !important;
+        box-shadow: none !important;
+        min-height: 80px; /* Increase navbar height */
+        padding-top: 1rem; /* Add vertical padding */
+        padding-bottom: 1rem;
+      }
+      .navbar-brand,
+      .navbar-nav .nav-link,
+      .btn-light {
+        color: #fff !important;
+        font-size: 1.2rem; /* Larger navbar text */
+        line-height: 2.5rem; /* Vertically center text in taller navbar */
+      }
+      .btn-light {
+        background-color: transparent !important;
+        border: none;
+        font-size: 1.1rem; /* Larger button text */
+      }
+      .btn-light:hover,
+      .btn-light:focus {
+        background-color: #1a7a1f !important;
+        color: #fff !important;
+      }
+      .btn-success,
+      .btn-success:focus {
+        background-color: #043606;
+        border-color: #064709;
+        font-size: 1.1rem; /* Larger button text */
+      }
+      .card {
+        border: 1px solid #8d6e63;
+        font-size: 1.1rem; /* Larger card text */
+      }
+      .form-control,
+      .form-label {
+        font-size: 1.1rem; /* Larger form text */
+      }
+      .form-control:focus {
+        border-color: #388e3c;
+        box-shadow: 0 0 0 0.2rem rgba(56, 142, 60, 0.25);
+      }
+      footer {
+        background-color: #06570a;
+        color: #fff;
+        padding: 1.2rem 0;
+        text-align: center;
+        font-size: 1.1rem;
+        margin-top: 2rem;
+        letter-spacing: 0.5px;
+      }
+    </style>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}"
+          >🌱 MEDICINAL PLANT DATABASE</a
+        >
+        <div>
+          <a class="btn btn-light me-2" href="{{ url_for('main.index') }}"
+            >Home</a
+          >
+          <a class="btn btn-light me-2" href="{{ url_for('main.plant_list') }}"
+            >Plants</a
+          >
+          {% if current_user.is_authenticated and current_user.is_admin %}
+          <a class="btn btn-light me-2" href="{{ url_for('admin.dashboard') }}"
+            >Admin</a
+          >
+          {% endif %} {% if current_user.is_authenticated %}
+          <a class="btn btn-light" href="{{ url_for('main.logout') }}"
+            >Logout</a
+          >
+          {% else %}
+          <a class="btn btn-light me-2" href="{{ url_for('main.login') }}"
+            >Login</a
+          >
+          <a class="btn btn-light" href="{{ url_for('main.register') }}"
+            >Register</a
+          >
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    <div
+      class="container d-flex justify-content-center align-items-center"
+      style="min-height: 80vh; max-width: 1100px"
+    >
+      <div class="w-100">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div
+          class="alert alert-{{ category }} alert-dismissible fade show"
+          role="alert"
+        >
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+      </div>
+    </div>
+    <footer>
+      &copy; {{ current_year|default(2025) }} Traditional Medicinal Plant DB
+      &mdash; Made with <span style="color: #0d6211">&#10084;</span> for nature
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

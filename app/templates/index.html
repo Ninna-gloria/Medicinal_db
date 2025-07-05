@@ -1,0 +1,83 @@
+{% extends "base.html" %} {% block title %}Welcome{% endblock %} {% block head
+%}
+<style>
+  .welcome-container {
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .welcome-card {
+    max-width: 900px;
+    margin: auto;
+    overflow: hidden;
+  }
+  .welcome-inner {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 1rem;
+    position: relative;
+  }
+  .leaf-top-left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 70px;
+    opacity: 0.7;
+  }
+  .leaf-bottom-right {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 70px;
+    opacity: 0.7;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container welcome-container">
+  <div class="card shadow-lg p-5 position-relative w-100 welcome-card">
+    <div class="welcome-inner">
+      <img
+        src="{{ url_for('static', filename='img/leaf1.png') }}"
+        alt="Leaf"
+        class="leaf-top-left"
+      />
+      <img
+        src="{{ url_for('static', filename='img/leaf2.png') }}"
+        alt="Leaf"
+        class="leaf-bottom-right"
+      />
+      <h1 class="display-4 text-success text-center mb-3">
+        Welcome to the Traditional Medicinal Plant DB
+      </h1>
+      <p class="lead text-center mb-4">
+        Explore, learn, and contribute to a living archive of traditional
+        medicinal plants and their uses. Join our community to preserve nature’s
+        wisdom! Nature speaks, and we listen.
+      </p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a
+          href="{{ url_for('main.plant_list') }}"
+          class="btn btn-success btn-lg"
+        >
+          Browse Plants
+        </a>
+        {% if not current_user.is_authenticated %}
+        <a
+          href="{{ url_for('main.register') }}"
+          class="btn btn-outline-success btn-lg"
+        >
+          Register
+        </a>
+        <a
+          href="{{ url_for('main.login') }}"
+          class="btn btn-outline-secondary btn-lg"
+        >
+          Login
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

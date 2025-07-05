@@ -1,0 +1,56 @@
+
+    {% extends "base.html" %} {% block title %}{{ plant.name }}{% endblock %} {%
+    block content %}
+    <div class="card shadow-sm p-4 mb-4">
+      <div class="row">
+        <div class="col-md-4">
+          {% if plant.image %}
+          <img
+            src="{{ url_for('static', filename='img/' ~ plant.image) }}"
+            class="img-fluid rounded"
+            alt="{{ plant.name }}"
+          />
+          {% else %}
+          <img
+            src="{{ url_for('static', filename='img/leaf3.png') }}"
+            class="img-fluid rounded"
+            alt="Plant"
+          />
+          {% endif %}
+        </div>
+        <div class="col-md-8">
+          <h2 class="text-success">{{ plant.name }}</h2>
+          <p><strong>Description:</strong> {{ plant.description }}</p>
+          <p><strong>Location:</strong> {{ plant.location }}</p>
+          <h5 class="mt-4">Uses:</h5>
+          <ul>
+            {% for use in uses %}
+            <li>{{ use.use_description }}</li>
+            {% else %}
+            <li>No uses recorded yet.</li>
+            {% endfor %}
+          </ul>
+          {% if current_user.is_authenticated %}
+          <a
+            href="{{ url_for('main.add_use', plant_id=plant.id) }}"
+            class="btn btn-success btn-sm mt-2"
+            >Add Use</a
+          >
+          {% endif %} {% if current_user.is_authenticated and
+          current_user.is_admin %}
+          <a
+            href="{{ url_for('main.edit_plant', plant_id=plant.id) }}"
+            class="btn btn-warning btn-sm mt-2"
+            >Edit</a
+          >
+          <a
+            href="{{ url_for('main.delete_plant', plant_id=plant.id) }}"
+            class="btn btn-danger btn-sm mt-2"
+            onclick="return confirm('Are you sure?')"
+            >Delete</a
+          >
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endblock %}
